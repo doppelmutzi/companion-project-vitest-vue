@@ -36,4 +36,28 @@ describe("useDashboardStore", () => {
     store.incrementFetchCount();
     expect(store.fetchCount).toEqual(3);
   });
+
+  /**
+   * Tests the shortenedQuote getter function of the store.
+   */
+  describe("shortenedQuote", () => {
+    it("should return an empty string when currentQuote is an empty string", () => {
+      store.currentQuote = { id: 0, quote: "", author: "" };
+      expect(store.shortenedQuote).toEqual("");
+    });
+
+    it("should return an empty string when currentQuote is undefined", () => {
+      store.currentQuote = undefined;
+      expect(store.shortenedQuote).toEqual("");
+    });
+
+    it("should return the first 10 trimmed characters of the quote followed by ' ...'", () => {
+      store.currentQuote = {
+        id: 0,
+        quote: " This is a long quote with whitespace ",
+        author: "author",
+      };
+      expect(store.shortenedQuote).toEqual("This is a ...");
+    });
+  });
 });
