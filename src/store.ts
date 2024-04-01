@@ -3,9 +3,18 @@ import { computed, ref, type Ref, toValue } from "vue";
 import { fetchQuote, type Quote } from "./quote.service";
 import { useFetch } from "./composables/useFetch";
 
+interface Todo {
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
+}
+
 export const useDashboardStore = defineStore("dashboard", () => {
+  // TODO entfernen oder sinnvollen Anwendungsfall für fetchCount finden
   const fetchCount = ref(0);
   const currentQuote = ref<Quote | null>();
+  const currentTodo: Ref<Todo | null> = ref(null);
 
   const incrementFetchCount = () => {
     fetchCount.value++;
@@ -55,13 +64,40 @@ export const useDashboardStore = defineStore("dashboard", () => {
       : "";
   });
 
+  // TODO testen
+  const fetchTodoWithPolling = (pollingInterval: number) => {
+    const doPoll = ref(true);
+
+    const poll = async () => {
+      try {
+        if (doPoll.value) {
+          const response = await fetch("https://dummyjson.com/todos/random");
+          currentTodo.value = await response.json();
+
+          setTimeout(poll, pollingInterval);
+        }
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    };
+
+    poll();
+
+    const togglePolling = () => {
+      doPoll.value = !doPoll.value;
+    };
+    return togglePolling;
+  };
+
   return {
     incrementFetchCount,
     fetchCount,
     currentQuote,
+    currentTodo,
     shortenedQuote,
     createQuote,
     createQuoteImage: createQuoteImageWithComposable,
+    fetchTodoWithPolling,
   };
 });
 

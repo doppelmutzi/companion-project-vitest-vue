@@ -1,17 +1,23 @@
 <template>
   <h1>My awesome dashboard</h1>
   <img :src="imageUrl" :alt="imgAlt" />
+
+  <TodoFromStore />
+  <TodoFromComposable />
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, type Ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useDashboardStore } from "./store";
+import TodoFromStore from "./components/TodoFromStore.vue";
+import TodoFromComposable from "./components/TodoFromComposable.vue";
+
+const dashboardStore = useDashboardStore();
 
 const imageUrl = ref("");
 const imgAlt = ref("");
 
 onMounted(async () => {
-  const dashboardStore = useDashboardStore();
   const blob = await dashboardStore.createQuoteImage();
   if (blob) {
     imageUrl.value = URL.createObjectURL(blob);

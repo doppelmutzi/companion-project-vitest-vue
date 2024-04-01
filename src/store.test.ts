@@ -3,7 +3,7 @@ import { createPinia, setActivePinia } from "pinia";
 import { useDashboardStore, type DashboardStore } from "./store";
 
 /**
- * Tests for the useDashboardStore function.
+ * Tests for the useDashboardStore function. Shows how to test Pinia stores (actions, getters)
  */
 describe("useDashboardStore", () => {
   let store: DashboardStore;

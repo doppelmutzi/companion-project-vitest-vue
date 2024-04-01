@@ -7,6 +7,7 @@ export interface State<T> {
   data: T | null;
 }
 
+// TODO test this function
 export async function useFetch<T>(
   url: string,
   options: { responseType?: "json" | "blob" } = { responseType: "json" },
