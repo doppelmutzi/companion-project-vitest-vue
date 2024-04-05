@@ -64,15 +64,20 @@ export const useDashboardStore = defineStore("dashboard", () => {
       : "";
   });
 
-  // TODO testen
   const fetchTodoWithPolling = (pollingInterval: number) => {
     const doPoll = ref(true);
 
     const poll = async () => {
       try {
         if (doPoll.value) {
-          const response = await fetch("https://dummyjson.com/todos/random");
-          currentTodo.value = await response.json();
+          // const response = await fetch("https://dummyjson.com/todos/random");
+          // currentTodo.value = await response.json();
+
+          const fetchState = await useFetch<Todo>(
+            "https://dummyjson.com/todos/random",
+          );
+
+          currentTodo.value = fetchState.data;
 
           setTimeout(poll, pollingInterval);
         }

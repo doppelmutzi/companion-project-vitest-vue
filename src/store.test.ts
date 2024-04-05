@@ -1,4 +1,13 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import {
+  vi,
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterAll,
+  beforeAll,
+  type Mock,
+} from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import { useDashboardStore, type DashboardStore } from "./store";
 
@@ -58,6 +67,67 @@ describe("useDashboardStore", () => {
         author: "author",
       };
       expect(store.shortenedQuote).toEqual("This is a ...");
+    });
+  });
+
+  // FIXME testen wenn direkt global.fetch genutzt wird
+  describe.skip("fetchTodoWithPolling", () => {
+    beforeAll(() => {
+      vi.useFakeTimers();
+    });
+
+    afterAll(() => {
+      vi.useRealTimers();
+    });
+
+    it("should poll every 5 seconds", async () => {
+      // global.fetch = vi.fn().mockResolvedValue({
+      //   json: () =>
+      //     new Promise((resolve) =>
+      //       resolve({
+      //         id: 1,
+      //         todo: "learn vitest",
+      //         completed: false,
+      //         userId: 1,
+      //       }),
+      //     ),
+      // });
+
+      const todo = {
+        id: 1,
+        todo: "bla",
+        completed: false,
+        userId: 1,
+      };
+
+      global.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => {
+            return Promise.resolve(todo);
+          },
+        }),
+      ) as Mock;
+
+      // global.fetch = vi
+      //   .fn()
+      //   .mockResolvedValueOnce({
+      //     json: () => Promise.resolve(todo),
+      //   })
+      //   .mockResolvedValueOnce({
+      //     json: () => Promise.resolve(todo2),
+      //   })
+
+      const togglePolling = await store.fetchTodoWithPolling(5000);
+
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(fetch).toHaveBeenCalledWith("https://dummyjson.com/todos/random");
+      expect(store.currentTodo).toStrictEqual(todo);
+
+      vi.advanceTimersByTime(6000);
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+
+      togglePolling();
     });
   });
 });
