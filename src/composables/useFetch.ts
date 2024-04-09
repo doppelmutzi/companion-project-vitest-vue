@@ -22,7 +22,7 @@ export async function useFetch<T>(
     fetchState.isLoading = true;
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error(response.statusText);
     }
     fetchState.data =
       options.responseType === "json"
@@ -31,6 +31,7 @@ export async function useFetch<T>(
   } catch (err: unknown) {
     fetchState.hasError = true;
     fetchState.error = err as Error;
+    // throw new Error(fetchState.error.message); // Throw the error to reject the promise
   } finally {
     fetchState.isLoading = false;
   }

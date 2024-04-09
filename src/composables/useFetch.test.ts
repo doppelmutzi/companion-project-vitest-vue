@@ -1,5 +1,6 @@
 import { describe, it, vi } from "vitest";
 import { useFetch } from "./useFetch";
+import { error } from "console";
 
 global.fetch = vi.fn();
 
@@ -16,6 +17,7 @@ describe("useFetch", () => {
     } as Response;
 
     vi.mocked(fetch).mockResolvedValue(mockResponse);
+    // also works
     // global.fetch = vi.fn().mockResolvedValue(mockResponse);
 
     const response = await useFetch("https://api.example.com/data");
@@ -26,7 +28,7 @@ describe("useFetch", () => {
     expect(response.data).toEqual(dummyData);
   });
 
-  it("should handle network errors and set the error state", async ({
+  it("should set the error state correctly with response status not ok", async ({
     expect,
   }) => {
     const errorMessage = "Network error";
@@ -40,7 +42,25 @@ describe("useFetch", () => {
 
     expect(response.isLoading).toBe(false);
     expect(response.hasError).toBe(true);
-    expect(response.error).toBeInstanceOf(Error);
+    expect(response.error!.message).toEqual(errorMessage);
+    expect(response.data).toBe(null);
+  });
+
+  it("should set the error state correctly when fetch request gets rejected", async ({
+    expect,
+  }) => {
+    const errorMessage = "Network error";
+    vi.mocked(fetch).mockRejectedValue(new Error(errorMessage));
+
+    // await expect(useFetch("https://api.example.com/data")).rejects.toThrow(
+    //   "Network error",
+    // );
+
+    const response = await useFetch("https://api.example.com/data");
+
+    expect(response.isLoading).toBe(false);
+    expect(response.hasError).toBe(true);
+    expect(response.error!.message).toEqual(errorMessage);
     expect(response.data).toBe(null);
   });
 });
