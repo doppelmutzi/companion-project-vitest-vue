@@ -6,6 +6,6 @@ export interface Quote {
 
 export async function fetchQuote() {
   const response = await fetch("https://dummyjson.com/quotes/random");
-  const data = (await response.json()) as Quote;
+  const data: Quote = await response.json();
   return data;
 }

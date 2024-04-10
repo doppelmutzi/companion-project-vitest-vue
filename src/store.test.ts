@@ -70,7 +70,6 @@ describe("useDashboardStore", () => {
     });
   });
 
-  // FIXME testen wenn direkt global.fetch genutzt wird
   describe.skip("fetchTodoWithPolling", () => {
     beforeAll(() => {
       vi.useFakeTimers();
@@ -81,18 +80,6 @@ describe("useDashboardStore", () => {
     });
 
     it("should poll every 5 seconds", async () => {
-      // global.fetch = vi.fn().mockResolvedValue({
-      //   json: () =>
-      //     new Promise((resolve) =>
-      //       resolve({
-      //         id: 1,
-      //         todo: "learn vitest",
-      //         completed: false,
-      //         userId: 1,
-      //       }),
-      //     ),
-      // });
-
       const todo = {
         id: 1,
         todo: "bla",
@@ -109,14 +96,25 @@ describe("useDashboardStore", () => {
         }),
       ) as Mock;
 
-      // global.fetch = vi
-      //   .fn()
-      //   .mockResolvedValueOnce({
-      //     json: () => Promise.resolve(todo),
-      //   })
-      //   .mockResolvedValueOnce({
-      //     json: () => Promise.resolve(todo2),
-      //   })
+      // global.fetch = vi.fn().mockResolvedValue({
+      //   json: () =>
+      //     new Promise((resolve) =>
+      //       resolve({
+      //         id: 1,
+      //         todo: "learn vitest",
+      //         completed: false,
+      //         userId: 1,
+      //       }),
+      //     ),
+      // });
+
+      // global.fetch = vi.fn().mockResolvedValue({
+      //   json: () => Promise.resolve(todo),
+      // });
+
+      // global.fetch = vi.fn().mockResolvedValue({
+      //   json: async () => todo,
+      // });
 
       const togglePolling = await store.fetchTodoWithPolling(5000);
 

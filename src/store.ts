@@ -11,7 +11,6 @@ interface Todo {
 }
 
 export const useDashboardStore = defineStore("dashboard", () => {
-  // TODO entfernen oder sinnvollen Anwendungsfall für fetchCount finden
   const fetchCount = ref(0);
   const currentQuote = ref<Quote | null>();
   const currentTodo: Ref<Todo | null> = ref(null);

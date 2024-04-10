@@ -1,22 +1,21 @@
 import { describe, it, expect, vi } from "vitest";
-import * as exports from "./quote.service";
-import { type Quote } from "./quote.service";
+import { fetchQuote } from "./quote.service";
 
 /**
  * Tests for the fetchQuote function.
  */
 describe("fetchQuote", () => {
   /**
-   * Tests that the fetchQuote function returns a valid quote.
+   * Tests that fetchQuote does a network call with the correct url and returns a quote.
    */
-  it("should return a valid quote", async () => {
-    const dummyQuote: Quote = {
-      id: 1,
-      quote: "This is a dummy quote",
-      author: "Anonymous",
-    };
-    vi.spyOn(exports, "fetchQuote").mockResolvedValue(dummyQuote);
+  it.only("should return a valid quote", async () => {
+    vi.spyOn(global, "fetch");
 
-    expect(await exports.fetchQuote()).toEqual(dummyQuote);
+    const response = await fetchQuote();
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://dummyjson.com/quotes/random",
+    );
+    expect(response.quote).toBeDefined();
   });
 });

@@ -1,6 +1,5 @@
 import { describe, it, vi } from "vitest";
 import { useFetch } from "./useFetch";
-import { error } from "console";
 
 global.fetch = vi.fn();
 
