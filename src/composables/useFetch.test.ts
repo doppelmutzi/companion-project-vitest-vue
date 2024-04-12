@@ -1,7 +1,7 @@
 import { describe, it, vi } from "vitest";
 import { useFetch } from "./useFetch";
 
-global.fetch = vi.fn();
+globalThis.fetch = vi.fn();
 
 describe("useFetch", () => {
   // alternative to use expect instead of importing it
@@ -17,7 +17,7 @@ describe("useFetch", () => {
 
     vi.mocked(fetch).mockResolvedValue(mockResponse);
     // also works
-    // global.fetch = vi.fn().mockResolvedValue(mockResponse);
+    // globalThis.fetch = vi.fn().mockResolvedValue(mockResponse);
 
     const response = await useFetch("https://api.example.com/data");
 

@@ -3,6 +3,7 @@ require("@rushstack/eslint-patch/modern-module-resolution");
 module.exports = {
   env: {
     node: true,
+    es2021: true,
   },
   parser: "vue-eslint-parser",
   parserOptions: {

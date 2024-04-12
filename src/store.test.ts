@@ -87,7 +87,7 @@ describe("useDashboardStore", () => {
         userId: 1,
       };
 
-      global.fetch = vi.fn(() =>
+      globalThis.fetch = vi.fn(() =>
         Promise.resolve({
           ok: true,
           json: () => {
@@ -96,7 +96,7 @@ describe("useDashboardStore", () => {
         }),
       ) as Mock;
 
-      // global.fetch = vi.fn().mockResolvedValue({
+      // globalThis.fetch = vi.fn().mockResolvedValue({
       //   json: () =>
       //     new Promise((resolve) =>
       //       resolve({
@@ -108,22 +108,22 @@ describe("useDashboardStore", () => {
       //     ),
       // });
 
-      // global.fetch = vi.fn().mockResolvedValue({
+      // globalThis.fetch = vi.fn().mockResolvedValue({
       //   json: () => Promise.resolve(todo),
       // });
 
-      // global.fetch = vi.fn().mockResolvedValue({
+      // globalThis.fetch = vi.fn().mockResolvedValue({
       //   json: async () => todo,
       // });
 
       const togglePolling = await store.fetchTodoWithPolling(5000);
 
-      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(globalThis.fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith("https://dummyjson.com/todos/random");
       expect(store.currentTodo).toStrictEqual(todo);
 
       vi.advanceTimersByTime(6000);
-      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(globalThis.fetch).toHaveBeenCalledTimes(1);
 
       togglePolling();
     });
