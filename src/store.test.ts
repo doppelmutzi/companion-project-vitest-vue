@@ -1,15 +1,7 @@
-import {
-  vi,
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterAll,
-  beforeAll,
-  type Mock,
-} from "vitest";
+import { vi, describe, it, expect, beforeEach, type Mock } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import { useDashboardStore, type DashboardStore } from "./store";
+import { useFetch } from "./composables/useFetch";
 
 /**
  * Tests for the useDashboardStore function. Shows how to test Pinia stores (actions, getters)
@@ -70,62 +62,70 @@ describe("useDashboardStore", () => {
     });
   });
 
-  describe.skip("fetchTodoWithPolling", () => {
-    beforeAll(() => {
-      vi.useFakeTimers();
+  /**
+   * Tests the createQuote action of the store.
+   */
+  describe("create quote image", () => {
+    // more complicated to test because implementation requires to understand internals of fetch responses
+    it("createQuoteImage should create a quote image by performing two fetch calls", async () => {
+      const dummyQuote = { id: 1, quote: "Hello, World!", author: "Anonymous" };
+      const dummyBlob = new Blob();
+
+      globalThis.fetch = vi.fn();
+      const mockedFetch = vi.mocked(fetch) as Mock;
+      mockedFetch
+        .mockResolvedValueOnce({ json: async () => dummyQuote })
+        .mockResolvedValueOnce({
+          blob: async () => dummyBlob,
+        });
+
+      const blob = await store.createQuoteImage();
+
+      // state assertion
+      expect(blob).toBe(dummyBlob);
+
+      // behaviour assertions
+      // Check the arguments of the first fetch call
+      expect(mockedFetch.mock.calls[0][0]).toBe(
+        "https://dummyjson.com/quotes/random",
+      );
+
+      // Check the arguments of the second fetch call
+      expect(mockedFetch.mock.calls[1][0]).toBe(
+        `https://dummyjson.com/image/768x80/008080/ffffff?text=${dummyQuote.quote}`,
+      );
     });
 
-    afterAll(() => {
-      vi.useRealTimers();
-    });
-
-    it("should poll every 5 seconds", async () => {
-      const todo = {
-        id: 1,
-        todo: "bla",
-        completed: false,
-        userId: 1,
+    // custom composable makes it easier to test
+    it("createQuoteImageWithComposable should create a quote image by calling useFetch twice", async () => {
+      const dummyJsonState = {
+        data: { id: 1, quote: "Hello, World!", author: "Anonymous" },
+        hasError: false,
       };
+      const dummyBlob = new Blob();
 
-      globalThis.fetch = vi.fn(() =>
-        Promise.resolve({
-          ok: true,
-          json: () => {
-            return Promise.resolve(todo);
-          },
-        }),
-      ) as Mock;
+      vi.mock("./composables/useFetch");
 
-      // globalThis.fetch = vi.fn().mockResolvedValue({
-      //   json: () =>
-      //     new Promise((resolve) =>
-      //       resolve({
-      //         id: 1,
-      //         todo: "learn vitest",
-      //         completed: false,
-      //         userId: 1,
-      //       }),
-      //     ),
-      // });
+      const mockedUseFetch = vi.mocked(useFetch) as Mock;
 
-      // globalThis.fetch = vi.fn().mockResolvedValue({
-      //   json: () => Promise.resolve(todo),
-      // });
+      mockedUseFetch
+        .mockResolvedValueOnce(dummyJsonState)
+        .mockResolvedValueOnce({ data: dummyBlob, hasError: false });
 
-      // globalThis.fetch = vi.fn().mockResolvedValue({
-      //   json: async () => todo,
-      // });
+      const blob = await store.createQuoteImageWithComposable();
 
-      const togglePolling = await store.fetchTodoWithPolling(5000);
+      // state assertion
+      expect(blob).toBe(dummyBlob);
 
-      expect(globalThis.fetch).toHaveBeenCalledTimes(1);
-      expect(fetch).toHaveBeenCalledWith("https://dummyjson.com/todos/random");
-      expect(store.currentTodo).toStrictEqual(todo);
-
-      vi.advanceTimersByTime(6000);
-      expect(globalThis.fetch).toHaveBeenCalledTimes(1);
-
-      togglePolling();
+      // behaviour assertions
+      // check the arguments of the first useFetch call
+      expect(mockedUseFetch.mock.calls[0][0]).toBe(
+        "https://dummyjson.com/quotes/random",
+      );
+      // check the arguments of the second useFetch call
+      expect(mockedUseFetch.mock.calls[1][0]).toBe(
+        `https://dummyjson.com/image/768x80/008080/ffffff?text=${dummyJsonState.data.quote}`,
+      );
     });
   });
 });

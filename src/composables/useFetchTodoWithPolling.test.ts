@@ -1,4 +1,3 @@
-import { afterEach } from "node:test";
 import { useFetch } from "./useFetch";
 import { useFetchTodoWithPolling } from "./useFetchTodoWithPolling";
 import {

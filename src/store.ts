@@ -23,6 +23,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     currentQuote.value = await fetchQuote();
   };
 
+  // TODO duplicate function and make easier to test by extracting 2 fetches into one async function
   // Harder to test because it uses fetch directly. Further, it performs two different fetches.
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const createQuoteImage = async () => {
@@ -36,6 +37,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     return blob;
   };
 
+  // alternative with custom composable instead of direct fetch calls
   const createQuoteImageWithComposable = async () => {
     const blob: Ref<Blob | null> = ref(null);
 
@@ -100,7 +102,8 @@ export const useDashboardStore = defineStore("dashboard", () => {
     currentTodo,
     shortenedQuote,
     createQuote,
-    createQuoteImage: createQuoteImageWithComposable,
+    createQuoteImage,
+    createQuoteImageWithComposable,
     fetchTodoWithPolling,
   };
 });

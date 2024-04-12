@@ -18,7 +18,7 @@ const imageUrl = ref("");
 const imgAlt = ref("");
 
 onMounted(async () => {
-  const blob = await dashboardStore.createQuoteImage();
+  const blob = await dashboardStore.createQuoteImageWithComposable();
   if (blob) {
     imageUrl.value = URL.createObjectURL(blob);
     imgAlt.value = dashboardStore.shortenedQuote;
