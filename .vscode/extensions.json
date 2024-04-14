@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "vitest.explorer",
     "Vue.volar",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
