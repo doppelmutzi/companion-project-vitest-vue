@@ -31,7 +31,7 @@ export async function useFetch<T>(
   } catch (err: unknown) {
     fetchState.hasError = true;
     fetchState.error = err as Error;
-    // throw new Error(fetchState.error.message); // Throw the error to reject the promise
+    // throw new Error(fetchState.error.message);
   } finally {
     fetchState.isLoading = false;
   }
