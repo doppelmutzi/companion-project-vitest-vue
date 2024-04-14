@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "vitest.explorer",
+    "deinsoftware.vitest-snippets",
     "Vue.volar",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
