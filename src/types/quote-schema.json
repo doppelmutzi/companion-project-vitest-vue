@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/Quote",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Quote": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        },
+        "quote": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "quote",
+        "author"
+      ],
+      "type": "object"
+    }
+  }
+}

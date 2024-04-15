@@ -1,8 +1,4 @@
-export interface Quote {
-  id: number;
-  quote: string;
-  author: string;
-}
+import type { Quote } from "./types/quote";
 
 export async function fetchQuote() {
   const response = await fetch("https://dummyjson.com/quotes/random");

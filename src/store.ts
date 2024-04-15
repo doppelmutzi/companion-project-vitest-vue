@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
 import { computed, ref, type Ref, toValue } from "vue";
-import { fetchQuote, type Quote } from "./quote.service";
+import { fetchQuote } from "./quote.service";
 import { useFetch } from "./composables/useFetch";
-
+import type { Quote } from "./types/quote";
+import quoteSchema from "./types/quote-schema.json";
+import Ajv from "ajv";
 interface Todo {
   id: number;
   todo: string;
@@ -95,6 +97,20 @@ export const useDashboardStore = defineStore("dashboard", () => {
     return togglePolling;
   };
 
+  const validateQuoteServiceResponse = async () => {
+    const ajv = new Ajv();
+
+    const quote = await fetchQuote();
+
+    const validate = ajv.compile(quoteSchema);
+    if (!validate(quote)) {
+      // throw new Error("schema validation error");
+      console.log("schema validation error");
+    } else {
+      return quote;
+    }
+  };
+
   return {
     incrementFetchCount,
     fetchCount,
@@ -105,6 +121,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     createQuoteImage,
     createQuoteImageWithComposable,
     fetchTodoWithPolling,
+    validateQuoteServiceResponse,
   };
 });
 

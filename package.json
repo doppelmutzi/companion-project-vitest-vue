@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
+    "create-schema": "npx ts-json-schema-generator --path 'src/types/quote.ts' -o 'src/types/quote-schema.json'",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
@@ -17,6 +18,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "ajv": "^8.12.0",
     "axios": "^1.6.8",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
