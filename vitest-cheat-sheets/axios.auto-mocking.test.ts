@@ -6,9 +6,10 @@ vi.mock("axios");
 // auto-mocking example with <root-folder>/__mocks__ folder
 describe("Axios mocking for test suite", () => {
   test("mocked axios", async () => {
-    await axios.get("string");
+    const response = await axios.get("url");
 
-    expect(axios.get).toHaveBeenCalledWith("string");
+    expect(response.data.urlCharCount).toBe(3);
+    expect(axios.get).toHaveBeenCalledWith("url");
     expect(axios.delete).toBeUndefined();
     expect(vi.isMockFunction(axios.get)).toBe(true);
     expect(vi.isMockFunction(axios.post)).toBe(true);
