@@ -1,5 +1,5 @@
 import { Mock, describe, expect, it, vi } from "vitest";
-import * as exports from "./sut-default-func";
+import * as exports from "./default-func";
 
 describe("mock or spy on different variants of default imports", () => {
   it("spy on default function", () => {

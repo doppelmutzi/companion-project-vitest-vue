@@ -1,4 +1,11 @@
 import { expect, it, vi } from "vitest";
+import { someFunction } from "./someModule";
+
+it("original module", () => {
+  const result = someFunction();
+
+  expect(result).toEqual("original implementation");
+});
 
 it("doMock allows to use variables from scope", async () => {
   const dummyText = "dummy text";
