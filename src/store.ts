@@ -103,8 +103,8 @@ export const useDashboardStore = defineStore("dashboard", () => {
 
     const validate = ajv.compile(quoteSchema);
     if (!validate(quote)) {
-      // throw new Error("schema validation error");
-      console.log("schema validation error");
+      throw new Error("schema validation error");
+      // console.log("schema validation error");
     } else {
       return quote;
     }
