@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders component correctly 1`] = `"<h1 data-v-ff5b7346="" id="awesome-component">Hello, reader</h1>"`;

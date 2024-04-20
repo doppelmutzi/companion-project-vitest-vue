@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot testing 1`] = `
+{
+  "email": "john.doe@example.com",
+  "id": 1,
+  "name": "John Doe",
+}
+`;
+
+exports[`snapshot testing with a mocked function 1`] = `
+{
+  "contact": [MockFunction spy],
+  "email": "john.doe@example.com",
+  "id": 1,
+  "name": "John Doe",
+}
+`;
