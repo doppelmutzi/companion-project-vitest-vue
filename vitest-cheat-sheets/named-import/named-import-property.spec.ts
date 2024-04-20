@@ -1,5 +1,5 @@
 import { expect, it, vi } from "vitest";
-import * as exports from "./sut-named-import-property";
+import * as exports from "./named-import-property";
 
 it("mock property", () => {
   vi.spyOn(exports, "magicNumber", "get").mockReturnValue(41);

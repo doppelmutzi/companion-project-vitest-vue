@@ -1,9 +1,9 @@
 import { expect, test, vi } from "vitest";
-import Bike from "./sut-default-class";
-import { Car } from "./sut-named-class";
+import Bike from "./default-class";
+import { Car } from "./named-class";
 
 test("mock a method of a default import class", () => {
-  vi.mock("./sut-default-class", () => {
+  vi.mock("./default-class", () => {
     const MyClass = vi.fn();
     MyClass.prototype.ride = vi.fn();
     return { default: MyClass };
@@ -24,7 +24,7 @@ test("mock a method of a default import class", () => {
 });
 
 test("mock a method of a named export class", () => {
-  vi.mock("./sut-named-class", () => {
+  vi.mock("./named-class", () => {
     const MyClass = vi.fn();
     MyClass.prototype.drive = vi.fn();
     return { Car: MyClass };

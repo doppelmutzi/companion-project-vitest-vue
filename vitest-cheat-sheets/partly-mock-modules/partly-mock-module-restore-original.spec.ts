@@ -1,11 +1,11 @@
 import { it, expect, describe, vi } from "vitest";
-import { stringOperations } from "./sut-partly-mock-module";
+import { stringOperations } from "./partly-mock-module";
 
 describe("partly mock imported module", () => {
   it("mock method of imported object and restore other original properties", () => {
-    vi.mock("./sut-partly-mock-module", async (importOriginal) => {
+    vi.mock("./partly-mock-module", async (importOriginal) => {
       const original =
-        (await importOriginal()) as typeof import("./sut-partly-mock-module");
+        (await importOriginal()) as typeof import("./partly-mock-module");
       return {
         stringOperations: {
           log: original.stringOperations.log,

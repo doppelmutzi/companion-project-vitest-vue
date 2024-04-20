@@ -1,10 +1,10 @@
 import { Mock, describe, expect, it, vi } from "vitest";
-import getWithEmoji from "./sut-default-func";
-import sutObj from "./sut-default-obj";
+import getWithEmoji from "./default-func";
+import sutObj from "./default-obj";
 
 describe("mock or spy on different variants of default imports", () => {
   it("mock default function", () => {
-    vi.mock("./sut-default-func", () => {
+    vi.mock("./default-func", () => {
       return {
         default: vi.fn((message: string) => `${message} 🥳`),
       };

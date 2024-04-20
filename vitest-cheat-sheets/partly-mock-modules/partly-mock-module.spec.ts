@@ -1,9 +1,9 @@
 import { it, expect, describe, vi } from "vitest";
-import { stringOperations } from "./sut-partly-mock-module";
+import { stringOperations } from "./partly-mock-module";
 
 describe("partly mock imported module", () => {
   it("mock method of imported object", () => {
-    vi.mock("./sut-partly-mock-module", () => {
+    vi.mock("./partly-mock-module", () => {
       return {
         stringOperations: {
           getWithEmoji: vi.fn().mockReturnValue("Hello world 🤩"),
