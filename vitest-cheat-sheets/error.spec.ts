@@ -1,7 +1,13 @@
 import { vi, test, expect, describe } from "vitest";
 
 describe("expecting errors", async () => {
-  test("should throw an error", async () => {
+  test("should throw an error", () => {
+    expect(() => {
+      throw new Error("Error message");
+    }).toThrow("Error message");
+  });
+
+  test("should throw an error after rejected fetch", async () => {
     const errorMessage = "Network error";
     vi.stubGlobal(
       "fetch",
