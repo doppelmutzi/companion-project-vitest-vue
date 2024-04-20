@@ -49,10 +49,6 @@ describe("useFetch", () => {
     const errorMessage = "Network error";
     vi.mocked(fetch).mockRejectedValue(new Error(errorMessage));
 
-    // await expect(useFetch("https://api.example.com/data")).rejects.toThrow(
-    //   "Network error",
-    // );
-
     const response = await useFetch("https://api.example.com/data");
 
     expect(response.isLoading).toBe(false);
