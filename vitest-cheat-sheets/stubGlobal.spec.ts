@@ -39,6 +39,16 @@ describe("vi.stubGlobal", () => {
     expect(vi.isMockFunction(error)).toBe(true);
   });
 
+  test("window example", () => {
+    vi.stubGlobal("window", {
+      innerWidth: 1024,
+      innerHeight: 768,
+    });
+
+    expect(window.innerWidth).toBe(1024);
+    expect(window.innerHeight).toBe(768);
+  });
+
   test.todo("fetch example", () => {
     // see fetch.spec.ts
   });
