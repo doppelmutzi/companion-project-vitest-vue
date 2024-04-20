@@ -16,8 +16,6 @@ describe("useFetch", () => {
     } as Response;
 
     vi.mocked(fetch).mockResolvedValue(mockResponse);
-    // also works
-    // globalThis.fetch = vi.fn().mockResolvedValue(mockResponse);
 
     const response = await useFetch("https://api.example.com/data");
 
