@@ -2,8 +2,6 @@ import { describe, it, expect, vi } from "vitest";
 import { fetchQuote } from "./quote.service";
 import type { Quote } from "./types/quote";
 
-vi.mock("./quote.service");
-
 /**
  * Tests for the fetchQuote function.
  */
@@ -17,7 +15,13 @@ describe("fetchQuote", () => {
       quote: "This is a dummy quote",
       author: "Anonymous",
     };
-    vi.mocked(fetchQuote).mockResolvedValue(dummyQuote);
+    const mockResponse = {
+      ok: true,
+      statusText: "OK",
+      json: async () => dummyQuote,
+    } as Response;
+
+    globalThis.fetch = vi.fn().mockResolvedValue(mockResponse);
 
     expect(await fetchQuote()).toEqual(dummyQuote);
   });

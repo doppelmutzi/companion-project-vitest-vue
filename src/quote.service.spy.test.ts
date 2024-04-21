@@ -19,4 +19,19 @@ describe("fetchQuote", () => {
     );
     expect(response.quote).toBeDefined();
   });
+
+  it("should return a valid quote by returning a fake response", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
+      ok: true,
+      statusText: "OK",
+      json: async () => ({ quote: "Hello, World!" }),
+    } as Response);
+
+    const response = await fetchQuote();
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "https://dummyjson.com/quotes/random",
+    );
+    expect(response.quote).toBe("Hello, World!");
+  });
 });
