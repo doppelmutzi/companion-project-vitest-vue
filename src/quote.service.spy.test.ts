@@ -8,7 +8,7 @@ describe("fetchQuote", () => {
   /**
    * Tests that fetchQuote does a network call with the correct url and returns a quote.
    */
-  it.only("should return a valid quote", async () => {
+  it("should return a valid quote", async () => {
     // global is deprecated in favor of globalThis
     const fetchSpy = vi.spyOn(globalThis, "fetch");
 
