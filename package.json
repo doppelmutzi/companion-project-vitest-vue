@@ -1,8 +1,5 @@
 {
   "name": "companion-project-to-blog-post-about-vitest",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
   "scripts": {
     "l": "npx ntl",
     "dev": "vite",

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import { type Quote, fetchQuote } from "./quote.service";
+import { fetchQuote } from "./quote.service";
+import type { Quote } from "./types/quote";
 
 vi.mock("./quote.service");
 
