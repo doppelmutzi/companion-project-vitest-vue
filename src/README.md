@@ -1,0 +1,1 @@
+This simple Vue 3 app uses TypeScript, Vitest, and Pinia to demonstrate realistic testing strategies. The emphasis is on using Vitest's APIs to create and utilize test doubles (i.e., mocks, spies, etc.) to test logic in isolation.
