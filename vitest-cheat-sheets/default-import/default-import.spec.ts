@@ -1,6 +1,6 @@
-import { Mock, describe, expect, it, vi } from "vitest";
-import getWithEmoji from "./default-func";
-import sutObj from "./default-obj";
+import { type Mock, describe, expect, it, vi } from "vitest";
+import getWithEmojiFunc from "./default-func";
+import getWithEmojiObj from "./default-obj";
 
 describe("mock or spy on different variants of default imports", () => {
   it("mock default function", () => {
@@ -10,11 +10,11 @@ describe("mock or spy on different variants of default imports", () => {
       };
     });
 
-    expect(getWithEmoji("hello world")).toEqual("hello world 🥳");
+    expect(getWithEmojiFunc("hello world")).toEqual("hello world 🥳");
   });
 
   it("spy on default object's method", () => {
-    const getWithEmojiSpy = vi.spyOn(sutObj, "getWithEmoji") as Mock;
+    const getWithEmojiSpy = vi.spyOn(getWithEmojiObj, "getWithEmoji") as Mock;
 
     const result = getWithEmojiSpy("spy kids");
 

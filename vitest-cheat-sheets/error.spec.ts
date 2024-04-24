@@ -1,6 +1,6 @@
 import { vi, test, expect, describe } from "vitest";
 
-describe("expecting errors", async () => {
+describe("expecting errors", () => {
   test("should throw an error", () => {
     expect(() => {
       throw new Error("Error message");
