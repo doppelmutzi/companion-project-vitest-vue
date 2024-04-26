@@ -60,6 +60,33 @@ export const useDashboardStore = defineStore("dashboard", () => {
     return toValue(blob);
   };
 
+  const createQuoteImageWithComposableRefactored = async () => {
+    const blob: Ref<Blob | null> = ref(null);
+    type Image = { url: string; altText: string };
+    const image: Ref<Image | null> = ref(null);
+    const jsonState = await useFetch<Quote>(
+      "https://dummyjson.com/quotes/random",
+    );
+
+    if (!jsonState.hasError) {
+      currentQuote.value = jsonState.data;
+      const blobState = await useFetch<Blob>(
+        `https://dummyjson.com/image/768x80/008080/ffffff?text=${jsonState.data?.quote}`,
+        { responseType: "blob" },
+      );
+      if (!blobState.hasError) {
+        blob.value = blobState.data;
+        if (blob.value) {
+          const url = URL.createObjectURL(blob.value);
+          const altText = shortenedQuote.value;
+          image.value = { url, altText };
+        }
+      }
+    }
+
+    return toValue(image);
+  };
+
   const shortenedQuote = computed(() => {
     return currentQuote.value?.quote
       ? currentQuote.value.quote.trim().slice(0, 10).trim() + " ..."
@@ -119,6 +146,7 @@ export const useDashboardStore = defineStore("dashboard", () => {
     createQuote,
     createQuoteImage,
     createQuoteImageWithComposable,
+    createQuoteImageWithComposableRefactored,
     fetchTodoWithPolling,
     validateQuoteServiceResponse,
   };

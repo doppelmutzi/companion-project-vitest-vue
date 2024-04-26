@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { flushPromises, mount } from "@vue/test-utils";
 import { test, expect } from "vitest";
 import Counter from "./Counter.vue";
 import { nextTick } from "vue";
@@ -17,6 +17,9 @@ test("renders component correctly", async () => {
   button.trigger("click");
   button.trigger("click");
 
-  await nextTick();
+  await flushPromises();
+  // also works
+  // await nextTick();
+
   expect(div.text()).toContain("count: 0");
 });

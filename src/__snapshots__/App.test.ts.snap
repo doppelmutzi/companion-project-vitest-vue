@@ -3,6 +3,7 @@
 exports[`App > renders the image correctly 1`] = `
 "<h1>My awesome dashboard</h1>
 <img src="a nice URL" alt="Dummy shortened quote">
+<counter-stub></counter-stub>
 <todo-from-store-stub></todo-from-store-stub>
 <todo-from-composable-stub></todo-from-composable-stub>"
 `;

@@ -6,8 +6,9 @@ import { createPinia, defineStore } from "pinia";
 
 describe("App", () => {
   it("renders the image correctly", async () => {
-    // mock URL.createObjectURL
+    // mock URL.createObjectURL since it is an internal of the onMounted hook
     vi.stubGlobal("URL", { createObjectURL: () => "a nice URL" });
+
     // Create a mock store
     const useMockDashboardStore = defineStore("dashboard", () => ({
       createQuoteImageWithComposable: async () => {
@@ -17,14 +18,13 @@ describe("App", () => {
       },
       shortenedQuote: "Dummy shortened quote",
     }));
+    // init pinia and use the mock store
     const pinia = createPinia();
     useMockDashboardStore(pinia);
 
-    const wrapper = shallowMount(App, {
-      global: {
-        plugins: [pinia],
-      },
-    });
+    // shallow mount the App component
+    // only the first (component tree) level of Vue components are rendered
+    const wrapper = shallowMount(App);
 
     // make sure to invoke onMounted lifecycle hook and resolve the promise
     await flushPromises();
@@ -33,6 +33,7 @@ describe("App", () => {
     expect(imgEl.attributes().alt).toBe("Dummy shortened quote");
     expect(imgEl.attributes().src).toBe("a nice URL");
 
+    // renders only first child level of App component: h1, img, tags of included Vue components
     expect(wrapper.html()).toMatchSnapshot();
   });
 });
