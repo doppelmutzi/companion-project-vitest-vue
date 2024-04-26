@@ -19,10 +19,16 @@ describe("useFetch", () => {
 
     const response = await useFetch("https://api.example.com/data");
 
+    // state assertions
     expect(response.isLoading).toBe(false);
     expect(response.hasError).toBe(false);
     expect(response.error).toBe(null);
     expect(response.data).toEqual(dummyData);
+    // behavior assertions
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1);
+    expect(vi.mocked(fetch)).toHaveBeenCalledWith(
+      "https://api.example.com/data",
+    );
   });
 
   it("should set the error state correctly with response status not ok", async ({
