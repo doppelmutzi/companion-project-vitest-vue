@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCounter } from "../composables/useCounter";
+import { useCounter } from "./useCounter";
 
 const { count, increment } = useCounter();
 </script>

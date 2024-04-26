@@ -11,7 +11,7 @@ import { onMounted, ref } from "vue";
 import { useDashboardStore } from "./store";
 import TodoFromStore from "./components/TodoFromStore.vue";
 import TodoFromComposable from "./components/TodoFromComposable.vue";
-import Counter from "./components/Counter.vue";
+import Counter from "../vitest-cheat-sheets/lifecycle-compostion-api/Counter.vue";
 
 const dashboardStore = useDashboardStore();
 
