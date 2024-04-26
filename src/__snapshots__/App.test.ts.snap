@@ -1,0 +1,8 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App > renders the image correctly 1`] = `
+"<h1>My awesome dashboard</h1>
+<img src="a nice URL" alt="Dummy shortened quote">
+<todo-from-store-stub></todo-from-store-stub>
+<todo-from-composable-stub></todo-from-composable-stub>"
+`;
