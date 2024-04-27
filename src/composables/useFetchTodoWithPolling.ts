@@ -14,9 +14,6 @@ export const useFetchTodoWithPolling = (pollingInterval: number) => {
   const poll = async () => {
     try {
       if (doPoll.value) {
-        // const response = await fetch("https://dummyjson.com/todos/random");
-        // todo.value = await response.json();
-
         const fetchState = await useFetch<Todo>(
           "https://dummyjson.com/todos/random",
         );
