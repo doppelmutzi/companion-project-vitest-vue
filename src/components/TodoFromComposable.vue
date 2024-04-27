@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useFetchTodoWithPolling } from "../composables/useFetchTodoWithPolling";
+import { useFetchTodoWithPolling } from "../composables/useFetchTodoWithPolling.ts";
 
 const buttonLabel = computed(() =>
   isPolling.value ? "Stop Polling" : "Start Polling",

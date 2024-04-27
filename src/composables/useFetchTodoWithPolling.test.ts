@@ -1,5 +1,5 @@
 import { useFetch } from "./useFetch";
-import { useFetchTodoWithPolling } from "./useFetchTodoWithPolling";
+import { useFetchTodoWithPolling } from "./useFetchTodoWithPolling.ts";
 import {
   vi,
   describe,
@@ -68,6 +68,9 @@ describe("useFetchTodoWithPolling", () => {
 
     // stop polling
     response.togglePolling();
+
+    // no fetching should happen now
+    expect(useFetchMocked).toHaveBeenCalledTimes(2);
   });
 
   it("should fetch API again after polling is started again", async () => {
