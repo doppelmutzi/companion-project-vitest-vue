@@ -1,5 +1,6 @@
+import { flushPromises } from "@vue/test-utils";
 import { useFetch } from "./useFetch";
-import { useFetchTodoWithPolling } from "./useFetchTodoWithPolling.ts";
+import { useFetchTodoWithPolling } from "./useFetchTodoWithPolling";
 import {
   vi,
   describe,
@@ -53,7 +54,9 @@ describe("useFetchTodoWithPolling", () => {
     const response = useFetchTodoWithPolling(5000);
 
     // the fetch function is called immediately
-    await new Promise(process.nextTick);
+    await flushPromises();
+    // also works await new Promise(process.nextTick);
+
     expect(response.todo.value?.todo).toEqual("vitest");
 
     // timer hasn't advanced enough yet
