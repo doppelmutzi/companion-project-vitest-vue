@@ -15,7 +15,7 @@ describe("expecting errors", () => {
     );
 
     await expect(fetch("https://api.example.com/data")).rejects.toThrow(
-      "Network error",
+      errorMessage,
     );
   });
 
